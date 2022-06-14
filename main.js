@@ -43,7 +43,7 @@ async function onFileSelect(ev) {
         for (const item of items) {
           ctx.font = `${item.height}px sans-serif`;
           const str = decalorify(item.str);
-          ctx.fillText(str, item.transform[4], item.transform[5]);
+          ctx.fillText(str, item.transform[4], height - item.transform[5]);
         }
       }
     }
