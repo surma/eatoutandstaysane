@@ -48,6 +48,10 @@ async function onFileSelect(ev) {
         canvasContext: ctx,
         viewport,
       }).promise;
+      const pngBlob = await new Promise(resolve => ctx.canvas.toBlob(resolve, "image/png"));
+      // const pngURL = URL.createObjectURL(pngBlob);
+      ctx.canvas.width = ctx.canvas.width;
+      ctx.drawImage(await createImageBitmap(pngBlob), 0, 0);
       const textStream = page.streamTextContent();
       const reader = textStream.getReader();
       while (true) {
