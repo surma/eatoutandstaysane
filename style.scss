@@ -1,0 +1,13 @@
+@import '@primer/css/core/index.scss';
+@import '@primer/css/blankslate/index.scss';
+// @import '@primer/css/support/index.scss';
+// @import '@primer/css/utilities/index.scss';
+
+#canvases {
+	display: flex;
+	flex-direction: column;
+}
+.page {
+	margin: 10px;
+	outline: 1px solid black;
+}

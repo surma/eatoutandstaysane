@@ -9,7 +9,11 @@
   "author": "Surma <surma@surma.dev>",
   "license": "Apache-2.0",
   "dependencies": {
+    "@primer/css": "^20.2.3",
     "pdfjs-dist": "^2.14.305",
     "vite": "^2.9.12"
+  },
+  "devDependencies": {
+    "sass": "^1.53.0"
   }
 }
