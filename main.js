@@ -7,6 +7,10 @@ const { canvases, file, log } = document.all;
 
 const FACTOR = 3;
 
+async function canvasToPNG(canvas) {
+  return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+}
+
 function caloryDetect(str) {
   const regexp = /[^\s]*\s*k?cals?[^\w]/gi;
   const matches = [];
@@ -50,6 +54,8 @@ async function onFileSelect(ev) {
         canvasContext: ctx,
         viewport,
       }).promise;
+      const rawPNG = await canvasToPNG(ctx.canvas);
+      const rawBitmap = await createImageBitmap(rawPNG);
       const textStream = page.streamTextContent();
       const reader = textStream.getReader();
       while (true) {
@@ -61,20 +67,23 @@ async function onFileSelect(ev) {
             const width = (match.str.length / item.str.length) * item.width;
             const x =
               item.transform[4] + (match.index / item.str.length) * item.width;
-            ctx.fillStyle = "black";
-            ctx.fillRect(
+            ctx.filter = `blur(${(FACTOR * item.height) / 4}px)`;
+            ctx.save();
+            let region = new Path2D();
+            region.rect(
               FACTOR * x,
               FACTOR * (height - item.transform[5]),
               FACTOR * width,
               -FACTOR * item.height
             );
+            ctx.clip(region, "nonzero");
+            ctx.drawImage(rawBitmap, 0, 0);
+            ctx.restore();
           }
         }
       }
 
-      const pngBlob = await new Promise((resolve) =>
-        ctx.canvas.toBlob(resolve, "image/png")
-      );
+      const pngBlob = await canvasToPNG(ctx.canvas);
       const pngURL = URL.createObjectURL(pngBlob);
       const img = globalThis.document.createElement("img");
       img.src = pngURL;
