@@ -33,6 +33,7 @@ function createCanvas(width, height) {
 async function onFileSelect(ev) {
   const file = ev.target?.files?.[0];
   if (!file) return;
+  ev.target.parentNode.remove();
   try {
     const ctx = createCanvas(1, 1);
     const data = await new Response(file).arrayBuffer();
