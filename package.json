@@ -1,7 +1,7 @@
 {
-  "name": "eatouttohelpsanity",
-  "version": "0.0.1",
-  "description": "",
+  "name": "eatoutandstaysane",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
     "dev": "vite .",
     "build": "vite build ."
@@ -11,9 +11,7 @@
   "dependencies": {
     "@primer/css": "^20.2.3",
     "pdfjs-dist": "^2.14.305",
-    "vite": "^2.9.12"
-  },
-  "devDependencies": {
+    "vite": "^2.9.12",
     "sass": "^1.53.0"
   }
 }
