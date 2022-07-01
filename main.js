@@ -16,6 +16,8 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfWorkerURL from "pdfjs-dist/build/pdf.worker.js?url";
 
+import { RingBuffer } from "./ringbuffer.js";
+
 GlobalWorkerOptions.workerSrc = pdfWorkerURL;
 
 const { canvases, file, log } = document.all;
@@ -27,7 +29,7 @@ async function canvasToPNG(canvas) {
 }
 
 function caloryDetect(str) {
-  const regexp = /[^\s]*\s*k?cals?[^\w]/gi;
+  const regexp = /[^\s]*\s*k?cals?([^\w]|$)/gi;
   const matches = [];
   let match;
   while ((match = regexp.exec(str))) {
@@ -73,29 +75,71 @@ async function onFileSelect(ev) {
       const rawBitmap = await createImageBitmap(rawPNG);
       const textStream = page.streamTextContent();
       const reader = textStream.getReader();
+      const ringbuf = new RingBuffer(10);
+      const blurs = [];
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
-        const { items, styles } = value;
+        const { items } = value;
         for (const item of items) {
-          for (const match of caloryDetect(item.str)) {
-            const width = (match.str.length / item.str.length) * item.width;
-            const x =
-              item.transform[4] + (match.index / item.str.length) * item.width;
-            ctx.filter = `blur(${(FACTOR * item.height) / 4}px)`;
-            ctx.save();
-            let region = new Path2D();
-            region.rect(
-              FACTOR * x,
-              FACTOR * (height - item.transform[5]),
-              FACTOR * width,
-              -FACTOR * item.height
-            );
-            ctx.clip(region, "nonzero");
-            ctx.drawImage(rawBitmap, 0, 0);
-            ctx.restore();
+          ringbuf.push(item);
+          const fullStr = [...ringbuf.values()]
+            .map((item) => item.str)
+            .join("");
+          for (const match of caloryDetect(fullStr)) {
+            let i = 0;
+            let startIndex, endIndex;
+            let startOffset, endOffset;
+            const it = ringbuf.entries();
+            for (const [idx, item] of it) {
+              if (i + item.str.length > match.index) {
+                startIndex = idx;
+                startOffset = match.index - i;
+                if (i + item.str.length >= match.index + match.str.length) {
+                  endIndex = idx;
+                  endOffset = match.index + match.str.length - i;
+                }
+                i += item.str.length;
+                break;
+              }
+              i += item.str.length;
+            }
+            for (const [idx, item] of it) {
+              if (i + item.str.length >= match.index + match.str.length) {
+                endIndex = idx;
+                endOffset =
+                  item.str.length - (match.index + match.str.length - i);
+                break;
+              }
+              i += item.str.length;
+            }
+            const startItem = ringbuf.at(startIndex);
+            const endItem = ringbuf.at(endIndex);
+            blurs.push({
+              startItem,
+              endItem,
+              startOffset,
+              endOffset,
+            });
+            ringbuf.clear();
           }
         }
+      }
+
+      for (const { startItem, endItem, startOffset, endOffset } of blurs) {
+        const bbo = blurBox(startItem, startOffset, endItem, endOffset);
+        ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
+        ctx.save();
+        let region = new Path2D();
+        region.rect(
+          FACTOR * bbo.x,
+          FACTOR * (height - bbo.y),
+          FACTOR * bbo.width,
+          -FACTOR * bbo.height
+        );
+        ctx.clip(region, "nonzero");
+        ctx.drawImage(rawBitmap, 0, 0);
+        ctx.restore();
       }
 
       const pngBlob = await canvasToPNG(ctx.canvas);
@@ -110,3 +154,51 @@ async function onFileSelect(ev) {
 }
 
 file.addEventListener("change", onFileSelect);
+
+function blurBox(startItem, startOffset, endItem, endOffset) {
+  if (startItem === endItem) {
+    return {
+      x:
+        startItem.transform[4] +
+        (startOffset / startItem.str.length) * startItem.width,
+      y: startItem.transform[5],
+      width:
+        (startItem.width * (endOffset - startOffset)) / startItem.str.length,
+      height: startItem.height,
+    };
+  }
+  const r1 = {
+    x:
+      startItem.transform[4] +
+      (startOffset / startItem.str.length) * startItem.width,
+    y: startItem.transform[5],
+    width: startItem.width * (1 - startOffset / startItem.str.length),
+    height: startItem.height,
+  };
+  const r2 = {
+    x: endItem.transform[4] + (endOffset / endItem.str.length) * endItem.width,
+    y: endItem.transform[5],
+    width: endItem.width * (1 - endOffset / endItem.str.length),
+    height: endItem.height,
+  };
+  return boundingBox(r1, r2);
+}
+
+function boundingBox(r1, r2) {
+  const xmin1 = r1.x;
+  const xmax1 = r1.x + r1.width;
+  const ymin1 = r1.y;
+  const ymax1 = r1.y + r1.height;
+  const xmin2 = r2.x;
+  const xmax2 = r2.x + r2.width;
+  const ymin2 = r2.y;
+  const ymax2 = r2.y + r2.height;
+
+  const x = Math.min(xmin1, xmin2);
+  const y = Math.min(ymin1, ymin2);
+  const xmax = Math.max(xmax1, xmax2);
+  const ymax = Math.max(ymax1, ymax2);
+  const width = xmax - x;
+  const height = ymax - y;
+  return { x, y, width, height };
+}
