@@ -2,33 +2,24 @@
 <html data-color-mode="dark" data-dark-theme="dark_dimmed">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="./style.scss" />
-  <div class="Header">
-    <div class="Header-item">
-      <a href="#" class="Header-link f4 d-flex flex-items-center">
-        <span>Eat out & stay sane</span>
-      </a>
-    </div>
-    <div class="Header-item">
-      <input type="search" class="form-control Header-input" />
-    </div>
-    <div class="Header-item Header-item--full"></div>
-    <div class="Header-item mr-0">
-      Made with 🤍 by&nbsp;<a
+  <link rel="stylesheet" href="./static/style.css" />
+  <main>
+    <label class="drop">
+      <img src="./static/logo.svg" class="logo">
+      <input type="file" id="file" style="display: none"/>
+      <p>Drop a PDF or open one</p>
+    </label>
+    <pre id="log"></pre>
+    <div id="canvases"></div>
+  </main>
+  <footer>
+      Made with 🖤 by <a
         href="https://twitter.com/dassurma"
-        class="Header-link"
         >Surma</a
-      >. Source on&nbsp;<a
+      >. Source on <a
         href="https://github.com/surma/eatoutandstaysane"
-        class="Header-link"
         >GitHub</a
       >.
-    </div>
-  </div>
-  <div class="blankslate">
-    <input type="file" id="file" />
-  </div>
-  <pre id="log"></pre>
-  <div id="canvases"></div>
+  </footer>
   <script type="module" src="./main.js"></script>
 </html>
