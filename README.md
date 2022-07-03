@@ -1,6 +1,6 @@
 # Eat Out & Stay Sane
 
-[eatoutandstaysane.surma.technology](https://eatoutandstaysane.surma.technology)
+[eatoutandstaysane.com](https://eatoutandstaysane.com)
 
 A web app to remove any mention of calories from food menu PDFs.
 
