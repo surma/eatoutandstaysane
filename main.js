@@ -15,6 +15,7 @@
 */
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfWorkerURL from "pdfjs-dist/build/pdf.worker.js?url";
+import "file-drop-element";
 
 import "./foods.js";
 
@@ -24,7 +25,8 @@ import { fadeOut, fromTop, fadeIn } from "./animation.js";
 
 GlobalWorkerOptions.workerSrc = pdfWorkerURL;
 
-const { canvases, file, log, header, spinner, issue } = document.all;
+const { canvases, file, log, header, spinner, issue, intro, filedrop } =
+  document.all;
 
 const FACTOR = 3;
 
@@ -55,11 +57,8 @@ function createCanvas(width, height) {
   return ctx;
 }
 
-async function onFileSelect(ev) {
-  const file = ev.target?.files?.[0];
-  if (!file) return;
-  const introContainer = ev.target.closest(".intro");
-  await fadeOut(introContainer, { remove: true });
+async function processPDF(file) {
+  await fadeOut(intro, { remove: true });
   header.style.display = "flex";
   issue.style.display = "block";
   fromTop(header, { padding: "1rem" });
@@ -171,7 +170,15 @@ async function onFileSelect(ev) {
   }
 }
 
-file.addEventListener("change", onFileSelect);
+file.addEventListener("change", (ev) => {
+  const file = ev.target?.files?.[0];
+  if (!file) return;
+  processPDF(file);
+});
+
+filedrop.addEventListener("filedrop", (ev) => {
+  processPDF(ev.files[0]);
+});
 
 function blurBox(startItem, startOffset, endItem, endOffset) {
   if (startItem === endItem) {

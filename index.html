@@ -7,15 +7,19 @@
     <img src="./static/logo.svg" class="logo" id="spinner" />
   </header>
   <main>
-    <label class="drop intro">
-      <img src="./static/logo.svg" class="logo" />
-      <input type="file" id="file" style="display: none" />
-      <p class="cta">Drop a PDF or open one</p>
+    <section class="intro" id="intro">
+      <file-drop class="drop" id="filedrop">
+        <label class="select">
+          <img src="./static/logo.svg" class="logo" />
+          <input type="file" id="file" style="display: none" />
+          <p class="cta">Drop a PDF or <u>select one</u></p>
+        </label>
+      </file-drop>
       <h1>What is this?</h1>
       <p>
         <em>Eat Out & Stay Sane</em> is a small app that you can use if you — for whatever reason — do not like seeing calories on food menus. The app not 100% accurate, but tries its very best.
       </p>
-    </label>
+    </section>
     <pre id="log" style="display: none"></pre>
     <section class="warning" style="display: none" id="issue">
       Did the program get something wrong?<br /><a

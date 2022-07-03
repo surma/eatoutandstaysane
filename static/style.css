@@ -54,11 +54,14 @@ footer {
   margin: 10px 0;
 }
 
+.intro {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
 .drop {
   cursor: pointer;
-  max-width: var(--maxw);
   display: block;
-  margin: 0 auto;
 }
 
 .drop .cta {
@@ -169,4 +172,8 @@ footer {
 a {
   text-decoration: underline;
   color: inherit;
+}
+
+.select {
+  cursor: pointer;
 }

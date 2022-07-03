@@ -9,6 +9,7 @@
   "author": "Surma <surma@surma.dev>",
   "license": "Apache-2.0",
   "dependencies": {
+    "file-drop-element": "^1.0.1",
     "pdfjs-dist": "^2.14.305",
     "sass": "^1.53.0",
     "vite": "^2.9.12"
