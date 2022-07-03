@@ -8,6 +8,7 @@
   --pink: #D14D95;
   --black: hsl(0, 0%, 20%);
   --food-size: 4rem;
+  --header-size: 4rem;
   font-size: 16px;
   font-family: sans-serif;
 }
@@ -33,13 +34,8 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
   padding: 1rem calc(var(--food-size) + 2rem);
+  padding-top: var(--header-size);
   color: var(--black);
-}
-
-header {
-  height: 4rem;
-  display: flex;
-  flex-direction: row;
 }
 
 footer {
@@ -111,4 +107,34 @@ footer {
 
 .food.right {
   right: 0;
+}
+
+.header {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(var(--header-size) + 1rem);
+  justify-content: center;
+  box-shadow: 0px 4px 10px -6px rgb(0 0 0 / 30%);
+  z-index: 9;
+  background: var(--yellow);
+  padding: 0.5rem;
+}
+
+@keyframes spinning {
+  from {
+    transform: rotate(0turn);
+  }
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.spinning {
+  animation-name: spinning;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1s;
 }

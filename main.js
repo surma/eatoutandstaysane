@@ -20,9 +20,11 @@ import "./foods.js";
 
 import { RingBuffer } from "./ringbuffer.js";
 
+import { fadeOut, fromTop } from "./animation.js";
+
 GlobalWorkerOptions.workerSrc = pdfWorkerURL;
 
-const { canvases, file, log } = document.all;
+const { canvases, file, log, header, spinner } = document.all;
 
 const FACTOR = 3;
 
@@ -56,7 +58,10 @@ function createCanvas(width, height) {
 async function onFileSelect(ev) {
   const file = ev.target?.files?.[0];
   if (!file) return;
-  ev.target.parentNode.remove();
+  await fadeOut(ev.target.parentNode, { remove: true });
+  header.style.display = "flex";
+  await fromTop(header, { padding: "1rem" });
+  spinner.classList.add("spinning");
   try {
     const ctx = createCanvas(1, 1);
     const data = await new Response(file).arrayBuffer();
@@ -130,24 +135,23 @@ async function onFileSelect(ev) {
 
       for (const { startItem, endItem, startOffset, endOffset } of blurs) {
         const bbo = blurBox(startItem, startOffset, endItem, endOffset);
-        // ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
-        ctx.save();
-        ctx.fillStyle = "white";
-        ctx.fillRect(
+        const rect = [
           FACTOR * bbo.x,
           FACTOR * (height - bbo.y),
           FACTOR * bbo.width,
-          -FACTOR * bbo.height
-        );
-        // let region = new Path2D();
-        // region.rect(
-        //   FACTOR * bbo.x,
-        //   FACTOR * (height - bbo.y),
-        //   FACTOR * bbo.width,
-        //   -FACTOR * bbo.height
-        // );
-        // ctx.clip(region, "nonzero");
-        // ctx.drawImage(rawBitmap, 0, 0);
+          -FACTOR * bbo.height,
+        ];
+        ctx.save();
+        if ("filter" in ctx) {
+          ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
+          let region = new Path2D();
+          region.rect(...rect);
+          ctx.clip(region, "nonzero");
+          ctx.drawImage(rawBitmap, 0, 0);
+        } else {
+          ctx.fillStyle = "white";
+          ctx.fillRect(...rect);
+        }
         ctx.restore();
       }
 
@@ -157,6 +161,7 @@ async function onFileSelect(ev) {
       img.src = pngURL;
       canvases.append(img);
     }
+    spinner.classList.remove("spinning");
   } catch (e) {
     log.innerHTML = `Error: ${e.message}`;
   }
