@@ -1,40 +1,62 @@
 <!DOCTYPE html>
-<html data-color-mode="dark" data-dark-theme="dark_dimmed">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="./static/style.css" />
-  <header class="header" id="header">
-    <img src="./static/logo.svg" class="logo" id="spinner" />
-  </header>
-  <main>
-    <section class="intro" id="intro">
-      <file-drop class="drop" id="filedrop">
-        <label class="select">
-          <img src="./static/logo.svg" class="logo" />
-          <input type="file" id="file" style="display: none" />
-          <p class="cta">Drop a PDF or <u>select one</u></p>
-        </label>
-      </file-drop>
-      <h1>What is this?</h1>
-      <p>
-        <em>Eat Out & Stay Sane</em> is a small app that you can use if you do
-        not like seeing calories on food menus. The app not 100% accurate, but
-        tries its very best.
-      </p>
-    </section>
-    <pre id="log" style="display: none"></pre>
-    <section class="warning" style="display: none" id="issue">
-      Did the app get something wrong?<br /><a
-        href="https://github.com/surma/eatoutandstaysane/issues/new"
-        >Let us know!</a
-      >
-    </section>
-    <div id="canvases"></div>
-  </main>
-  <footer>
-    Made with 🖤 by <a href="https://twitter.com/dassurma">Surma</a>. <br />
-    Design by <a href="https://twitter.com/genevievearkle">Beanie</a>. <br />
-    Source on <a href="https://github.com/surma/eatoutandstaysane">GitHub</a>.
-  </footer>
-  <script type="module" src="./main.js"></script>
-</html>
+<title>Eat Out & Stay Sane</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#FFFDDF" />
+<meta property="og:url" content="https://eatoutandstaysane.surma.technology" />
+<meta property="og:title" content="Eat Out & Stay Sane" /><meta
+  name="twitter:title"
+  content="Eat Out & Stay Sane"
+/>
+<meta property="og:type" content="article" /><meta
+  property="og:image"
+  content="https://eatoutandstaysane.surma.technology/logo.jpg"
+/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta
+  name="twitter:image"
+  content="https://eatoutandstaysane.surma.technology/logo.jpg"
+/>
+<meta
+  property="og:description"
+  content="A web app to remove any mention of calories from food menu PDFs."
+/>
+<meta
+  name="twitter:description"
+  content="A web app to remove any mention of calories from food menu PDFs."
+/>
+<link rel="stylesheet" href="./static/style.css" />
+<header class="header" id="header">
+  <img src="./static/logo.svg" class="logo" id="spinner" />
+</header>
+<main>
+  <section class="intro" id="intro">
+    <file-drop class="drop" id="filedrop">
+      <label class="select">
+        <img src="./static/logo.svg" class="logo" />
+        <input type="file" id="file" style="display: none" />
+        <p class="cta">Drop a PDF or <u>select one</u></p>
+      </label>
+    </file-drop>
+    <h1>What is this?</h1>
+    <p>
+      <em>Eat Out & Stay Sane</em> is a small app that you can use if you do not
+      like seeing calories on food menus. The app not 100% accurate, but tries
+      its very best.
+    </p>
+  </section>
+  <pre id="log" style="display: none"></pre>
+  <section class="warning" style="display: none" id="issue">
+    Did the app get something wrong?<br /><a
+      href="https://github.com/surma/eatoutandstaysane/issues/new"
+      >Let us know!</a
+    >
+  </section>
+  <div id="canvases"></div>
+</main>
+<footer>
+  Made with 🖤 by <a href="https://twitter.com/dassurma">Surma</a>. <br />
+  Design by <a href="https://twitter.com/genevievearkle">Beanie</a>. <br />
+  Source on <a href="https://github.com/surma/eatoutandstaysane">GitHub</a>.
+</footer>
+<script type="module" src="./main.js"></script>
