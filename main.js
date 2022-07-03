@@ -16,6 +16,8 @@
 import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import pdfWorkerURL from "pdfjs-dist/build/pdf.worker.js?url";
 
+import "./foods.js";
+
 import { RingBuffer } from "./ringbuffer.js";
 
 GlobalWorkerOptions.workerSrc = pdfWorkerURL;
@@ -23,8 +25,6 @@ GlobalWorkerOptions.workerSrc = pdfWorkerURL;
 const { canvases, file, log } = document.all;
 
 const FACTOR = 3;
-
-const FRUITS = "🍌 🧁 🍕 🍳 🍊 🍓 🍪 🍆 🍷 🍟 🥒 🍈".split(" ");
 
 async function canvasToPNG(canvas) {
   return new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
@@ -132,7 +132,7 @@ async function onFileSelect(ev) {
         const bbo = blurBox(startItem, startOffset, endItem, endOffset);
         // ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
         ctx.save();
-        ctx.fillStyle="white"
+        ctx.fillStyle = "white";
         ctx.fillRect(
           FACTOR * bbo.x,
           FACTOR * (height - bbo.y),
@@ -211,27 +211,3 @@ function boundingBox(r1, r2) {
   const height = ymax - y;
   return { x, y, width, height };
 }
-
-function randomFruit() {
-  const fruits = FRUITS.slice();
-  fruits.sort(() => (Math.random() > 0.5 ? 1 : -1));
-  return fruits;
-}
-
-function createFruit() {
-  const fruitContainer = document.createElement("aside");
-  fruitContainer.classList.add("fruit");
-  const fruits = randomFruit();
-  fruits.push(...randomFruit());
-  fruits.forEach((fruit) => {
-    const span = document.createElement("span");
-    span.textContent = fruit;
-    fruitContainer.append(span);
-  });
-  return fruitContainer;
-}
-["left", "right"].forEach((dir) => {
-  const c = createFruit();
-  c.classList.add(dir);
-  document.body.append(c);
-});

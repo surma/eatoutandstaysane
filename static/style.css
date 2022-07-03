@@ -7,9 +7,15 @@
   --blue: #3765A8;
   --pink: #D14D95;
   --black: hsl(0, 0%, 20%);
-  --fruit-size: 4rem;
+  --food-size: 4rem;
   font-size: 16px;
   font-family: sans-serif;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --food-size: 2rem;
+  }
 }
 
 html {
@@ -26,7 +32,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
-  padding: 1rem calc(var(--fruit-size) + 2rem);
+  padding: 1rem calc(var(--food-size) + 2rem);
   color: var(--black);
 }
 
@@ -59,7 +65,7 @@ footer {
   margin: 0 auto;
 }
 
-@scroll-timeline fruitTimeline {
+@scroll-timeline foodTimeline {
   source: auto;
   /* orientation: vertical; */
   /* scroll-offsets: 0px, 500px; */
@@ -74,34 +80,35 @@ footer {
   }
 }
 
-.fruit {
+.food {
   position: fixed;
   top: 0;
   height: 150vh;
   overflow: hidden;
-  width: var(--fruit-size);
-  font-size: var(--fruit-size);
+  width: var(--food-size);
+  font-size: var(--food-size);
   display: flex;
   flex-direction: column;
   gap: 2rem;
   margin: 0 1rem;
+  padding: 1rem 0;
   animation-name: scroll;
   animation-fill-mode: both;
   animation-play-state: paused;
   animation-duration: 3s;
-  animation-timeline: fruitTimeline;
+  animation-timeline: foodTimeline;
 }
 
 @supports (animation-timeline: something) {
-  .fruit {
+  .food {
     animation-play-state: running;
   }
 }
 
-.fruit.left {
+.food.left {
   left: 0;
 }
 
-.fruit.right {
+.food.right {
   right: 0;
 }

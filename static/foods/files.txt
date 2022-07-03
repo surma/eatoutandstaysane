@@ -1,0 +1,12 @@
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f34c.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f9c1.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f355.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f373.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f34a.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f353.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f36a.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f346.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f377.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f35f.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f952.svg
+https://raw.githubusercontent.com/googlefonts/noto-emoji/main/svg/emoji_u1f348.svg
