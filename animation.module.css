@@ -1,0 +1,41 @@
+@keyframes fadeOut {
+	to {
+		opacity: 0;
+	}
+}
+
+.fadeOut {
+	animation-name: fadeOut;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	animation-duration: .3s;
+}
+
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+}
+
+.fadeIn {
+	animation-name: fadeIn;
+	animation-fill-mode: both;
+	animation-timing-function: linear;
+	animation-duration: .3s;
+}
+
+
+@keyframes fromTop {
+	from {
+		transform: translateY(calc(-100% - var(--extra)));
+	}
+}
+
+.fromTop {
+	--extra: 0px;
+	animation-name: fromTop;
+	animation-fill-mode: both;
+	animation-timing-function: ease-out;
+	animation-duration: .3s;
+}

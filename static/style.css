@@ -9,6 +9,7 @@
   --black: hsl(0, 0%, 20%);
   --food-size: 4rem;
   --header-size: 4rem;
+  --maxw: 400px;
   font-size: 16px;
   font-family: sans-serif;
 }
@@ -34,12 +35,13 @@ body {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
   padding: 1rem calc(var(--food-size) + 2rem);
-  padding-top: var(--header-size);
+  padding-top: calc(var(--header-size) + 1rem);
   color: var(--black);
 }
 
 footer {
   text-align: center;
+  padding: 1rem;
 }
 
 #canvases {
@@ -56,7 +58,7 @@ footer {
   cursor: pointer;
   text-align: center;
   font-style: italic;
-  max-width: 400px;
+  max-width: var(--maxw);
   display: block;
   margin: 0 auto;
 }
@@ -137,4 +139,30 @@ footer {
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-duration: 1s;
+}
+
+.warning {
+  display: block;
+  position: relative;
+  padding: 1rem;
+  border: 3px solid hsl(42, 80%, 50%);
+  border-radius: 100000px;
+  text-align: center;
+  max-width: var(--maxw);
+  margin: 1rem auto;
+}
+
+.warning:before {
+  content: '⚠️';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+
+}
+
+a {
+  text-decoration: underline;
+  color: inherit;
 }

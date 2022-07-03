@@ -20,11 +20,11 @@ import "./foods.js";
 
 import { RingBuffer } from "./ringbuffer.js";
 
-import { fadeOut, fromTop } from "./animation.js";
+import { fadeOut, fromTop, fadeIn } from "./animation.js";
 
 GlobalWorkerOptions.workerSrc = pdfWorkerURL;
 
-const { canvases, file, log, header, spinner } = document.all;
+const { canvases, file, log, header, spinner, issue } = document.all;
 
 const FACTOR = 3;
 
@@ -60,7 +60,9 @@ async function onFileSelect(ev) {
   if (!file) return;
   await fadeOut(ev.target.parentNode, { remove: true });
   header.style.display = "flex";
-  await fromTop(header, { padding: "1rem" });
+  issue.style.display = "block";
+  fromTop(header, { padding: "1rem" });
+  fadeIn(issue);
   spinner.classList.add("spinning");
   try {
     const ctx = createCanvas(1, 1);
@@ -160,6 +162,7 @@ async function onFileSelect(ev) {
       const img = globalThis.document.createElement("img");
       img.src = pngURL;
       canvases.append(img);
+      fadeIn(img);
     }
     spinner.classList.remove("spinning");
   } catch (e) {
