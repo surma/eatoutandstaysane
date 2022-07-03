@@ -42,6 +42,7 @@ body {
 footer {
   text-align: center;
   padding: 1rem;
+  line-height: 1.5em;
 }
 
 #canvases {
@@ -57,6 +58,7 @@ footer {
 .intro {
   max-width: var(--maxw);
   margin: 0 auto;
+  text-align: center;
 }
 
 .drop {
