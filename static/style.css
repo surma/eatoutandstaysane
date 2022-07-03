@@ -18,13 +18,15 @@ html {
 }
 
 body {
+  position: relative;
+  overflow: auto;
   background-color: var(--yellow);
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr min-content;
-  padding: 1rem var(--fruit-size);
+  padding: 1rem calc(var(--fruit-size) + 2rem);
   color: var(--black);
 }
 
@@ -52,4 +54,54 @@ footer {
   cursor: pointer;
   text-align: center;
   font-style: italic;
+  max-width: 400px;
+  display: block;
+  margin: 0 auto;
+}
+
+@scroll-timeline fruitTimeline {
+  source: auto;
+  /* orientation: vertical; */
+  /* scroll-offsets: 0px, 500px; */
+}
+
+@keyframes scroll {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-33%));
+  }
+}
+
+.fruit {
+  position: fixed;
+  top: 0;
+  height: 150vh;
+  overflow: hidden;
+  width: var(--fruit-size);
+  font-size: var(--fruit-size);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 0 1rem;
+  animation-name: scroll;
+  animation-fill-mode: both;
+  animation-play-state: paused;
+  animation-duration: 3s;
+  animation-timeline: fruitTimeline;
+}
+
+@supports (animation-timeline: something) {
+  .fruit {
+    animation-play-state: running;
+  }
+}
+
+.fruit.left {
+  left: 0;
+}
+
+.fruit.right {
+  right: 0;
 }
