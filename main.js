@@ -130,17 +130,24 @@ async function onFileSelect(ev) {
 
       for (const { startItem, endItem, startOffset, endOffset } of blurs) {
         const bbo = blurBox(startItem, startOffset, endItem, endOffset);
-        ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
+        // ctx.filter = `blur(${(FACTOR * bbo.height) / 4}px)`;
         ctx.save();
-        let region = new Path2D();
-        region.rect(
+        ctx.fillStyle="white"
+        ctx.fillRect(
           FACTOR * bbo.x,
           FACTOR * (height - bbo.y),
           FACTOR * bbo.width,
           -FACTOR * bbo.height
         );
-        ctx.clip(region, "nonzero");
-        ctx.drawImage(rawBitmap, 0, 0);
+        // let region = new Path2D();
+        // region.rect(
+        //   FACTOR * bbo.x,
+        //   FACTOR * (height - bbo.y),
+        //   FACTOR * bbo.width,
+        //   -FACTOR * bbo.height
+        // );
+        // ctx.clip(region, "nonzero");
+        // ctx.drawImage(rawBitmap, 0, 0);
         ctx.restore();
       }
 
