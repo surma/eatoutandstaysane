@@ -58,7 +58,8 @@ function createCanvas(width, height) {
 async function onFileSelect(ev) {
   const file = ev.target?.files?.[0];
   if (!file) return;
-  await fadeOut(ev.target.parentNode, { remove: true });
+  const introContainer = ev.target.closest(".intro");
+  await fadeOut(introContainer, { remove: true });
   header.style.display = "flex";
   issue.style.display = "block";
   fromTop(header, { padding: "1rem" });

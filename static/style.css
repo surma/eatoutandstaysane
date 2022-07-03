@@ -56,11 +56,15 @@ footer {
 
 .drop {
   cursor: pointer;
-  text-align: center;
-  font-style: italic;
   max-width: var(--maxw);
   display: block;
   margin: 0 auto;
+}
+
+.drop .cta {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 4rem;
 }
 
 @scroll-timeline foodTimeline {
